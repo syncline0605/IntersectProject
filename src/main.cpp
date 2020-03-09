@@ -1,4 +1,4 @@
-ï»¿#include <iostream>
+#include <iostream>
 #include <fstream>
 #include <vector>
 #include <set>
@@ -35,66 +35,79 @@ vector<Line> lineSet;
 vector<Circle> circleSet;
 set<Point> pointSet;
 
-//è§£æå‘½ä»¤è¡Œ
+//½âÎöÃüÁîĞĞ
 void parseCommandLine(int argc, char* argv[])
 {
-
+	string in = "-i";
+	string out = "-o";
+	for (int i = 1; i <= argc; i++)
+	{
+		string command(argv[i]);
+		if (!command.compare(in))
+		{
+			input.open(argv[++i], ios::in);
+		}
+		else if (!command.compare(out))
+		{
+			output.open(argv[++i], ios::out);
+		}
+	}
 }
-//ä»è¾“å…¥æ–‡ä»¶é‡Œè·å–è¾“å…¥å¯¹è±¡
+//´ÓÊäÈëÎÄ¼şÀï»ñÈ¡ÊäÈë¶ÔÏó
 void getInput()
 {
 
 }
 
-//æ±‚ä¸¤å‘é‡çš„ç‚¹ä¹˜ç»“æœ
+//ÇóÁ½ÏòÁ¿µÄµã³Ë½á¹û
 double dot(Vector a, Vector b)
 {
 
 }
 
-//æ±‚è¿æ¥ä¸¤ç‚¹çš„å‘é‡
+//ÇóÁ¬½ÓÁ½µãµÄÏòÁ¿
 Vector getVector(Point a, Point b)
 {
 
 }
 
-//æ±‚ä¸¤ç‚¹ä¹‹é—´çš„è·ç¦»
+//ÇóÁ½µãÖ®¼äµÄ¾àÀë
 double getPointsDistance(Point a, Point b)
 {
 
 }
 
-//æ±‚ç‚¹åœ¨ç›´çº¿ä¸Šçš„æŠ•å½±åæ ‡
+//ÇóµãÔÚÖ±ÏßÉÏµÄÍ¶Ó°×ø±ê
 Point getProjection(Point a, Line l)
 {
 
 }
 
-//æ±‚ç‚¹åˆ°ç›´çº¿çš„è·ç¦»
+//Çóµãµ½Ö±ÏßµÄ¾àÀë
 double getPointLineDistance(Point a, Line l)
 {
 
 }
 
-//æ±‚ä¸¤ç›´çº¿äº¤ç‚¹
-int getPoint(Line l1, Line l2, Point &crossPoint)
+//ÇóÁ½Ö±Ïß½»µã
+int getPoint(Line l1, Line l2, Point& crossPoint)
 {
 
 }
 
-//æ±‚ç›´çº¿ä¸åœ†çš„äº¤ç‚¹
-int getPoint(Line l, Circle c, pair<Point, Point> &crossPair)
+//ÇóÖ±ÏßÓëÔ²µÄ½»µã
+int getPoint(Line l, Circle c, pair<Point, Point>& crossPair)
 {
 
 }
 
-//æ±‚ä¸¤åœ†äº¤ç‚¹
-int getPoint(Circle c1, Circle c2, pair<Point, Point> &crossPair)
+//ÇóÁ½Ô²½»µã
+int getPoint(Circle c1, Circle c2, pair<Point, Point>& crossPair)
 {
 
 }
 
-//è®¡ç®—æ€»äº¤ç‚¹ä¸ªæ•°
+//¼ÆËã×Ü½»µã¸öÊı
 int calPoint()
 {
 
