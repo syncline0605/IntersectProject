@@ -11,8 +11,8 @@
 
 using namespace std;
 
-ofstream input;
-ofstream output;
+fstream input;
+fstream output;
 
 struct Point {
 	double x;
@@ -56,7 +56,27 @@ void parseCommandLine(int argc, char* argv[])
 //从输入文件里获取输入对象
 void getInput()
 {
-
+	int n;
+	string line = "L";
+	string circle = "C";
+	input >> n;
+	for (int i = 0; i < n; i++)
+	{
+		string kind;
+		input >> kind;
+		if (!kind.compare(line))
+		{
+			Line newline;
+			input >> newline.p1.x >> newline.p1.y >> newline.p2.x >> newline.p2.y;
+			lineSet.push_back(newline);
+		}
+		else if (!kind.compare(circle))
+		{
+			Circle newCircle;
+			input >> newCircle.center.x >> newCircle.center.y >> newCircle.r;
+			circleSet.push_back(newCircle);
+		}
+	}
 }
 
 //求两向量的点乘结果
