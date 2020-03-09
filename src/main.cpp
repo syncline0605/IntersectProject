@@ -82,19 +82,25 @@ void getInput()
 //求两向量的点乘结果
 double dot(Vector a, Vector b)
 {
-
-}
-
-//求连接两点的向量
-Vector getVector(Point a, Point b)
-{
-
+	return (a.x * b.x + a.y * b.y);
 }
 
 //求两点之间的距离
 double getPointsDistance(Point a, Point b)
 {
+	double x = a.x - b.x;
+	double y = a.y - b.y;
+	return (sqrt(x * x + y * y));
+}
 
+//求连接两点，从点a指向点b的向量
+Vector getVector(Point a, Point b)
+{
+	Vector newVec;
+	newVec.x = b.x - a.x;
+	newVec.y = b.y - a.y;
+	newVec.length = sqrt((newVec.x) * (newVec.x) + (newVec.y) * (newVec.y));
+	return newVec;
 }
 
 //求点在直线上的投影坐标
