@@ -118,7 +118,8 @@ Point getProjection(Point a, Line l)
 //求点到直线的距离
 double getPointLineDistance(Point a, Line l)
 {
-
+	Point pr = getProjection(a, l);
+	return getPointsDistance(a, pr);
 }
 
 //求两直线交点
