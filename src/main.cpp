@@ -141,7 +141,27 @@ int getPoint(Line l1, Line l2, Point& crossPoint)
 //求直线与圆的交点
 int getPoint(Line l, Circle c, pair<Point, Point>& crossPair)
 {
-	
+	Point pr = getProjection(c.center, l);
+	double distance = getPointsDistance(c.center, pr);
+	if (distance > c.r)
+	{
+		return NOCROSS;
+	}
+	else if (distance == c.r)
+	{
+		crossPair.first = pr;
+		return ONECROSS;
+	}
+	else
+	{
+		Vector e = getUnitVector(getVector(l.p1, l.p2));
+		double m = sqrt(c.r * c.r - distance * distance);
+		crossPair.first.x = pr.x + m * e.x;
+		crossPair.first.y = pr.y + m * e.y;
+		crossPair.second.x = pr.x - m * e.x;
+		crossPair.second.y = pr.y - m * e.y;
+		return TWOCROSS;
+	}
 }
 
 //求两圆交点
