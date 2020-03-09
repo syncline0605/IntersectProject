@@ -103,6 +103,16 @@ Vector getVector(Point a, Point b)
 	return newVec;
 }
 
+//求某一向量的单位向量
+Vector getUnitVector(Vector v)
+{
+	Vector unitVector;
+	unitVector.x = v.x / v.length;
+	unitVector.y = v.y / v.length;
+	unitVector.length = 1;
+	return unitVector;
+}
+
 //求点在直线上的投影坐标
 Point getProjection(Point a, Line l)
 {
@@ -131,7 +141,7 @@ int getPoint(Line l1, Line l2, Point& crossPoint)
 //求直线与圆的交点
 int getPoint(Line l, Circle c, pair<Point, Point>& crossPair)
 {
-
+	
 }
 
 //求两圆交点
