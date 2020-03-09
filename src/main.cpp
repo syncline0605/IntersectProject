@@ -106,7 +106,13 @@ Vector getVector(Point a, Point b)
 //求点在直线上的投影坐标
 Point getProjection(Point a, Line l)
 {
-
+	Vector e = getVector(l.p1, l.p2);
+	Vector k = getVector(l.p1, a);
+	double r = dot(k, e) / e.length;
+	Point pr;
+	pr.x = l.p1.x + r * e.x;
+	pr.y = l.p1.y + r * e.y;
+	return pr;
 }
 
 //求点到直线的距离
