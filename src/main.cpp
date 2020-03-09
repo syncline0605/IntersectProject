@@ -130,7 +130,50 @@ int getPoint(Circle c1, Circle c2, pair<Point, Point>& crossPair)
 //计算总交点个数
 int calPoint()
 {
-
+	for (int i = 0; i < lineSet.size(); i++)
+	{
+		for (int j = i + 1; j < lineSet.size(); j++)
+		{
+			Point crossPoint;
+			int result = getPoint(lineSet.at(i), lineSet.at(j), crossPoint);
+			if (result == ONECROSS)
+			{
+				pointSet.insert(crossPoint);
+			}
+		}
+		for (int j = 0; j < circleSet.size(); j++)
+		{
+			pair<Point, Point> crossPair;
+			int result = getPoint(lineSet.at(i), circleSet.at(j), crossPair);
+			if (result == ONECROSS)
+			{
+				pointSet.insert(crossPair.first);
+			}
+			else if (result == TWOCROSS)
+			{
+				pointSet.insert(crossPair.first);
+				pointSet.insert(crossPair.second);
+			}
+		}
+	}
+	for (int i = 0; i < circleSet.size(); i++)
+	{
+		for (int j = i + 1; j < circleSet.size(); j++)
+		{
+			pair<Point, Point> crossPair;
+			int result = getPoint(circleSet.at(i), circleSet.at(j), crossPair);
+			if (result == ONECROSS)
+			{
+				pointSet.insert(crossPair.first);
+			}
+			else if (result == TWOCROSS)
+			{
+				pointSet.insert(crossPair.first);
+				pointSet.insert(crossPair.second);
+			}
+		}
+	}
+	return pointSet.size();
 }
 
 int main(int argc, char* argv[])
