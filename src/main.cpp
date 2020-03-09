@@ -135,7 +135,27 @@ double getPointLineDistance(Point a, Line l)
 //求两直线交点
 int getPoint(Line l1, Line l2, Point& crossPoint)
 {
+	int flag1 = (l1.p1.x == l1.p2.x) ? 0 : 1;
+	int flag2 = (l2.p1.x == l2.p2.x) ? 0 : 1;
+	if (flag1 == 0 && flag2 == 0)
+	{
+		return NOCROSS;
+	}
+	double a1 = l1.p1.y - l1.p2.y;
+	double b1 = l1.p2.x - l1.p1.x;
+	double c1 = l1.p1.x * l1.p2.y - l1.p2.x * l1.p1.y;
+	double a2 = l2.p1.y - l2.p2.y;
+	double b2 = l2.p2.x - l2.p1.x;
+	double c2 = l2.p1.x * l2.p2.y - l2.p2.x * l2.p1.y;
 
+	double D = a1 * b2 - a2 * b1;
+	if (D == 0)
+	{
+		return NOCROSS;
+	}
+	crossPoint.x = (b1 * c2 - b2 * c1) / D;
+	crossPoint.y = (a2 * c1 - a1 * c2) / D;
+	return ONECROSS;
 }
 
 //求直线与圆的交点
