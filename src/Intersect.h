@@ -50,3 +50,18 @@ struct Circle {
 	struct Point center;
 	double r;
 };
+
+void parseCommandLine(int argc, char* argv[], string& inputstring, string& outputstring);
+void getInput(string inputstring, vector<Line>& lineSet, vector<Circle>& circleSet);
+double dot(Vector a, Vector b) noexcept;
+double getPointsDistance(Point a, Point b) noexcept;
+Vector getVector(Point a, Point b) noexcept;
+Vector getUnitVector(Vector v) noexcept;
+Point getProjection(Point a, Line l) noexcept;
+double getPointLineDistance(Point a, Line l) noexcept;
+Point getCoorFromPolar(double x, double r) noexcept;
+double getAngleFromPoint(Point p) noexcept;
+int getPoint(Line l1, Line l2, Point& crossPoint) noexcept;
+int getPoint(Line l, Circle c, pair<Point, Point>& crossPair) noexcept;
+int getPoint(Circle c1, Circle c2, pair<Point, Point>& crossPair) noexcept;
+int calPoint(vector<Line>& lineSet, vector<Circle>& circleSet, set<Point>& pointSet);
