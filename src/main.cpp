@@ -178,7 +178,31 @@ int getPoint(Line l, Circle c, pair<Point, Point>& crossPair)
 //求两圆交点
 int getPoint(Circle c1, Circle c2, pair<Point, Point>& crossPair)
 {
-	
+	double distance = getPointsDistance(c1.center, c2.center);
+	if ((distance > c1.r + c2.r) || (distance < fabs(c1.r - c2.r)))
+	{
+		return NOCROSS;
+	}
+	else if (distance == c1.r + c2.r || distance == fabs(c1.r - c2.r))
+	{
+		Vector e = getUnitVector(getVector(c1.center, c2.center));
+		crossPair.first.x = c1.center.x + c1.r * e.x;
+		crossPair.first.y = c1.center.y + c1.r * e.y;
+		return ONECROSS;
+	}
+	else
+	{
+		double a = acos((c1.r * c1.r + distance * distance - c2.r * c2.r) / (2 * c1.r * distance));
+		Vector e = getVector(c1.center, c2.center);
+		double t = getAngleFromPoint(e);
+		Point p1 = getCoorFromPolar(c1.r, t + a);
+		Point p2 = getCoorFromPolar(c1.r, t - a);
+		crossPair.first.x = c1.center.x + p1.x;
+		crossPair.first.y = c1.center.y + p1.y;
+		crossPair.second.x = c1.center.x + p2.x;
+		crossPair.second.y = c1.center.y + p2.y;
+		return TWOCROSS;
+	}
 }
 
 //计算总交点个数
