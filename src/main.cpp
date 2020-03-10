@@ -32,8 +32,8 @@ void getInput(string inputstring, vector<Line>& lineSet, vector<Circle>& circleS
 	ifstream input;
 	input.open(inputstring, ios::in);
 	int n;
-	string line = "L";
-	string circle = "C";
+	const string line = "L";
+	const string circle = "C";
 	input >> n;
 	for (int i = 0; i < n; i++)
 	{
@@ -64,8 +64,8 @@ double dot(Vector a, Vector b)
 //求两点之间的距离
 double getPointsDistance(Point a, Point b)
 {
-	double x = a.x - b.x;
-	double y = a.y - b.y;
+	const double x = a.x - b.x;
+	const double y = a.y - b.y;
 	return (sqrt(x * x + y * y));
 }
 
@@ -93,8 +93,8 @@ Vector getUnitVector(Vector v)
 Point getProjection(Point a, Line l)
 {
 	Vector e = getVector(l.p1, l.p2);
-	Vector k = getVector(l.p1, a);
-	double r = dot(k, e) / e.length;
+	const Vector k = getVector(l.p1, a);
+	const double r = dot(k, e) / e.length;
 	Point pr;
 	e = getUnitVector(e);
 	pr.x = l.p1.x + r * e.x;
@@ -105,7 +105,7 @@ Point getProjection(Point a, Line l)
 //求点到直线的距离
 double getPointLineDistance(Point a, Line l)
 {
-	Point pr = getProjection(a, l);
+	const Point pr = getProjection(a, l);
 	return getPointsDistance(a, pr);
 }
 
@@ -127,20 +127,20 @@ double getAngleFromPoint(Point p)
 //求两直线交点
 int getPoint(Line l1, Line l2, Point& crossPoint)
 {
-	int flag1 = (l1.p1.x == l1.p2.x) ? 0 : 1;
-	int flag2 = (l2.p1.x == l2.p2.x) ? 0 : 1;
+	const int flag1 = (l1.p1.x == l1.p2.x) ? 0 : 1;
+	const int flag2 = (l2.p1.x == l2.p2.x) ? 0 : 1;
 	if (flag1 == 0 && flag2 == 0)
 	{
 		return NOCROSS;
 	}
-	double a1 = l1.p1.y - l1.p2.y;
-	double b1 = l1.p2.x - l1.p1.x;
-	double c1 = l1.p1.x * l1.p2.y - l1.p2.x * l1.p1.y;
-	double a2 = l2.p1.y - l2.p2.y;
-	double b2 = l2.p2.x - l2.p1.x;
-	double c2 = l2.p1.x * l2.p2.y - l2.p2.x * l2.p1.y;
+	const double a1 = l1.p1.y - l1.p2.y;
+	const double b1 = l1.p2.x - l1.p1.x;
+	const double c1 = l1.p1.x * l1.p2.y - l1.p2.x * l1.p1.y;
+	const double a2 = l2.p1.y - l2.p2.y;
+	const double b2 = l2.p2.x - l2.p1.x;
+	const double c2 = l2.p1.x * l2.p2.y - l2.p2.x * l2.p1.y;
 
-	double D = a1 * b2 - a2 * b1;
+	const double D = a1 * b2 - a2 * b1;
 	if (D == 0)
 	{
 		return NOCROSS;
@@ -153,8 +153,8 @@ int getPoint(Line l1, Line l2, Point& crossPoint)
 //求直线与圆的交点
 int getPoint(Line l, Circle c, pair<Point, Point>& crossPair)
 {
-	Point pr = getProjection(c.center, l);
-	double distance = getPointsDistance(c.center, pr);
+	const Point pr = getProjection(c.center, l);
+	const double distance = getPointsDistance(c.center, pr);
 	if (distance > c.r)
 	{
 		return NOCROSS;
@@ -166,8 +166,8 @@ int getPoint(Line l, Circle c, pair<Point, Point>& crossPair)
 	}
 	else
 	{
-		Vector e = getUnitVector(getVector(l.p1, l.p2));
-		double m = sqrt(c.r * c.r - distance * distance);
+		const Vector e = getUnitVector(getVector(l.p1, l.p2));
+		const double m = sqrt(c.r * c.r - distance * distance);
 		crossPair.first.x = pr.x + m * e.x;
 		crossPair.first.y = pr.y + m * e.y;
 		crossPair.second.x = pr.x - m * e.x;
@@ -179,25 +179,25 @@ int getPoint(Line l, Circle c, pair<Point, Point>& crossPair)
 //求两圆交点
 int getPoint(Circle c1, Circle c2, pair<Point, Point>& crossPair)
 {
-	double distance = getPointsDistance(c1.center, c2.center);
+	const double distance = getPointsDistance(c1.center, c2.center);
 	if ((distance > c1.r + c2.r) || (distance < fabs(c1.r - c2.r)))
 	{
 		return NOCROSS;
 	}
 	else if (distance == c1.r + c2.r || distance == fabs(c1.r - c2.r))
 	{
-		Vector e = getUnitVector(getVector(c1.center, c2.center));
+		const Vector e = getUnitVector(getVector(c1.center, c2.center));
 		crossPair.first.x = c1.center.x + c1.r * e.x;
 		crossPair.first.y = c1.center.y + c1.r * e.y;
 		return ONECROSS;
 	}
 	else
 	{
-		double a = acos((c1.r * c1.r + distance * distance - c2.r * c2.r) / (2 * c1.r * distance));
-		Vector e = getVector(c1.center, c2.center);
-		double t = getAngleFromPoint(e);
-		Point p1 = getCoorFromPolar(c1.r, t + a);
-		Point p2 = getCoorFromPolar(c1.r, t - a);
+		const double a = acos((c1.r * c1.r + distance * distance - c2.r * c2.r) / (2 * c1.r * distance));
+		const Vector e = getVector(c1.center, c2.center);
+		const double t = getAngleFromPoint(e);
+		const Point p1 = getCoorFromPolar(c1.r, t + a);
+		const Point p2 = getCoorFromPolar(c1.r, t - a);
 		crossPair.first.x = c1.center.x + p1.x;
 		crossPair.first.y = c1.center.y + p1.y;
 		crossPair.second.x = c1.center.x + p2.x;
@@ -209,21 +209,21 @@ int getPoint(Circle c1, Circle c2, pair<Point, Point>& crossPair)
 //计算总交点个数
 int calPoint(vector<Line>& lineSet, vector<Circle>& circleSet, set<Point>& pointSet)
 {
-	for (int i = 0; i < lineSet.size(); i++)
+	for (unsigned int i = 0; i < lineSet.size(); i++)
 	{
-		for (int j = i + 1; j < lineSet.size(); j++)
+		for (unsigned int j = i + 1; j < lineSet.size(); j++)
 		{
 			Point crossPoint;
-			int result = getPoint(lineSet.at(i), lineSet.at(j), crossPoint);
+			const int result = getPoint(lineSet.at(i), lineSet.at(j), crossPoint);
 			if (result == ONECROSS)
 			{
 				pointSet.insert(crossPoint);
 			}
 		}
-		for (int j = 0; j < circleSet.size(); j++)
+		for (unsigned int j = 0; j < circleSet.size(); j++)
 		{
 			pair<Point, Point> crossPair;
-			int result = getPoint(lineSet.at(i), circleSet.at(j), crossPair);
+			const int result = getPoint(lineSet.at(i), circleSet.at(j), crossPair);
 			if (result == ONECROSS)
 			{
 				pointSet.insert(crossPair.first);
@@ -235,12 +235,12 @@ int calPoint(vector<Line>& lineSet, vector<Circle>& circleSet, set<Point>& point
 			}
 		}
 	}
-	for (int i = 0; i < circleSet.size(); i++)
+	for (unsigned int i = 0; i < circleSet.size(); i++)
 	{
-		for (int j = i + 1; j < circleSet.size(); j++)
+		for (unsigned int j = i + 1; j < circleSet.size(); j++)
 		{
 			pair<Point, Point> crossPair;
-			int result = getPoint(circleSet.at(i), circleSet.at(j), crossPair);
+			const int result = getPoint(circleSet.at(i), circleSet.at(j), crossPair);
 			if (result == ONECROSS)
 			{
 				pointSet.insert(crossPair.first);
@@ -266,7 +266,7 @@ int main(int argc, char* argv[])
 
 	parseCommandLine(argc, argv, inputstring, outputstring);
 	getInput(inputstring, lineSet, circleSet);
-	int n = calPoint(lineSet, circleSet, pointSet);
+	const int n = calPoint(lineSet, circleSet, pointSet);
 
 	ofstream output;
 	output.open(outputstring, ios::out);
