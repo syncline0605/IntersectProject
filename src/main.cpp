@@ -108,6 +108,21 @@ double getPointLineDistance(Point a, Line l)
 	return getPointsDistance(a, pr);
 }
 
+//通过极坐标系上的极角和极径求在直角坐标系中的坐标
+Point getCoorFromPolar(double x, double r)
+{
+	Point newPoint;
+	newPoint.x = x * cos(r);
+	newPoint.y = x * sin(r);
+	return newPoint;
+}
+
+//通过坐标求出这一点代表的向量和x轴的夹角
+double getAngleFromPoint(Point p)
+{
+	return atan2(p.y, p.x);
+}
+
 //求两直线交点
 int getPoint(Line l1, Line l2, Point& crossPoint)
 {
