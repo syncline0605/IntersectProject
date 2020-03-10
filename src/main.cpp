@@ -15,7 +15,7 @@ void parseCommandLine(int argc, char* argv[], string& inputstring, string& outpu
 	string out = "-o";
 	for (int i = 1; i < argc; i++)
 	{
-		string command(argv[i]);
+		string command = argv[i];
 		if (!command.compare(in))
 		{
 			inputstring = argv[++i];
@@ -56,13 +56,13 @@ void getInput(string inputstring, vector<Line>& lineSet, vector<Circle>& circleS
 }
 
 //求两向量的点乘结果
-double dot(Vector a, Vector b)
+double dot(Vector a, Vector b) noexcept
 {
 	return (a.x * b.x + a.y * b.y);
 }
 
 //求两点之间的距离
-double getPointsDistance(Point a, Point b)
+double getPointsDistance(Point a, Point b) noexcept
 {
 	const double x = a.x - b.x;
 	const double y = a.y - b.y;
@@ -70,7 +70,7 @@ double getPointsDistance(Point a, Point b)
 }
 
 //求连接两点，从点a指向点b的向量
-Vector getVector(Point a, Point b)
+Vector getVector(Point a, Point b) noexcept
 {
 	Vector newVec;
 	newVec.x = b.x - a.x;
@@ -80,7 +80,7 @@ Vector getVector(Point a, Point b)
 }
 
 //求某一向量的单位向量
-Vector getUnitVector(Vector v)
+Vector getUnitVector(Vector v) noexcept
 {
 	Vector unitVector;
 	unitVector.x = v.x / v.length;
@@ -90,12 +90,12 @@ Vector getUnitVector(Vector v)
 }
 
 //求点在直线上的投影坐标
-Point getProjection(Point a, Line l)
+Point getProjection(Point a, Line l) noexcept
 {
 	Vector e = getVector(l.p1, l.p2);
 	const Vector k = getVector(l.p1, a);
 	const double r = dot(k, e) / e.length;
-	Point pr;
+	Point pr = {0, 0};
 	e = getUnitVector(e);
 	pr.x = l.p1.x + r * e.x;
 	pr.y = l.p1.y + r * e.y;
@@ -103,14 +103,14 @@ Point getProjection(Point a, Line l)
 }
 
 //求点到直线的距离
-double getPointLineDistance(Point a, Line l)
+double getPointLineDistance(Point a, Line l) noexcept
 {
 	const Point pr = getProjection(a, l);
 	return getPointsDistance(a, pr);
 }
 
 //通过极坐标系上的极角和极径求在直角坐标系中的坐标
-Point getCoorFromPolar(double x, double r)
+Point getCoorFromPolar(double x, double r) noexcept
 {
 	Point newPoint;
 	newPoint.x = x * cos(r);
@@ -119,13 +119,13 @@ Point getCoorFromPolar(double x, double r)
 }
 
 //通过坐标求出这一点代表的向量和x轴的夹角
-double getAngleFromPoint(Point p)
+double getAngleFromPoint(Point p) noexcept
 {
 	return atan2(p.y, p.x);
 }
 
 //求两直线交点
-int getPoint(Line l1, Line l2, Point& crossPoint)
+int getPoint(Line l1, Line l2, Point& crossPoint) noexcept
 {
 	const int flag1 = (l1.p1.x == l1.p2.x) ? 0 : 1;
 	const int flag2 = (l2.p1.x == l2.p2.x) ? 0 : 1;
@@ -151,7 +151,7 @@ int getPoint(Line l1, Line l2, Point& crossPoint)
 }
 
 //求直线与圆的交点
-int getPoint(Line l, Circle c, pair<Point, Point>& crossPair)
+int getPoint(Line l, Circle c, pair<Point, Point>& crossPair) noexcept
 {
 	const Point pr = getProjection(c.center, l);
 	const double distance = getPointsDistance(c.center, pr);
@@ -177,7 +177,7 @@ int getPoint(Line l, Circle c, pair<Point, Point>& crossPair)
 }
 
 //求两圆交点
-int getPoint(Circle c1, Circle c2, pair<Point, Point>& crossPair)
+int getPoint(Circle c1, Circle c2, pair<Point, Point>& crossPair) noexcept
 {
 	const double distance = getPointsDistance(c1.center, c2.center);
 	if ((distance > c1.r + c2.r) || (distance < fabs(c1.r - c2.r)))
