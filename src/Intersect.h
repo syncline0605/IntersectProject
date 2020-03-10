@@ -10,37 +10,34 @@
 #define ONECROSS 1
 #define TWOCROSS 2
 
+#define EPS (0.00001)
+
 using namespace std;
+
+int compareDouble(double x)
+{
+	if (fabs(x) < EPS) return 0;
+	if (x < 0) return -1;
+	else return 1;
+}
 
 struct Point {
 	double x;
 	double y;
 	double length;
 
-	bool operator==(const Point b) const
+	bool operator ==(const Point& b) const
 	{
-		return (x == b.x) && (y == b.y);
+		if (compareDouble(x - b.x) == 0 && compareDouble(y - b.y) == 0) return true;
+		return false;
 	}
-	bool operator!=(const Point b) const
+	bool operator <(const Point& b) const
 	{
-		return (!((x == b.x) && (y == b.y)));
+		if (compareDouble(x - b.x) == 0 && compareDouble(y - b.y) < 0) return true;
+		if (compareDouble(x - b.x) < 0) return true;
+		return false;
 	}
-	bool operator<=(const Point b) const
-	{
-		return x <= b.x;
-	}
-	bool operator<(const Point b) const
-	{
-		return x < b.x;
-	}
-	bool operator>=(const Point b) const
-	{
-		return x >= b.x;
-	}
-	bool operator>(const Point b) const
-	{
-		return x > b.x;
-	}
+	
 };
 
 typedef Point Vector;
