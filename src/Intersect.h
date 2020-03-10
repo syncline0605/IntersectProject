@@ -16,6 +16,31 @@ struct Point {
 	double x;
 	double y;
 	double length;
+
+	bool operator==(const Point b) const
+	{
+		return (x == b.x) && (y == b.y);
+	}
+	bool operator!=(const Point b) const
+	{
+		return (!((x == b.x) && (y == b.y)));
+	}
+	bool operator<=(const Point b) const
+	{
+		return x <= b.x;
+	}
+	bool operator<(const Point b) const
+	{
+		return x < b.x;
+	}
+	bool operator>=(const Point b) const
+	{
+		return x >= b.x;
+	}
+	bool operator>(const Point b) const
+	{
+		return x > b.x;
+	}
 };
 
 typedef Point Vector;
