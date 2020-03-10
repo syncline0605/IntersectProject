@@ -4,39 +4,12 @@
 #include <set>
 #include <string>
 #include <cmath>
-
-#define NOCROSS 0
-#define ONECROSS 1
-#define TWOCROSS 2
+#include "Intersect.h"
 
 using namespace std;
 
-fstream input;
-fstream output;
-
-struct Point {
-	double x;
-	double y;
-	double length;
-};
-
-typedef Point Vector;
-
-struct Line {
-	Point p1, p2;
-};
-
-struct Circle {
-	Point center;
-	double r;
-};
-
-vector<Line> lineSet;
-vector<Circle> circleSet;
-set<Point> pointSet;
-
 //解析命令行
-void parseCommandLine(int argc, char* argv[])
+void parseCommandLine(int argc, char* argv[], string& inputstring, string& outputstring)
 {
 	string in = "-i";
 	string out = "-o";
@@ -45,17 +18,19 @@ void parseCommandLine(int argc, char* argv[])
 		string command(argv[i]);
 		if (!command.compare(in))
 		{
-			input.open(argv[++i], ios::in);
+			inputstring = argv[++i];
 		}
 		else if (!command.compare(out))
 		{
-			output.open(argv[++i], ios::out);
+			outputstring = argv[++i];
 		}
 	}
 }
 //从输入文件里获取输入对象
-void getInput()
+void getInput(string inputstring, vector<Line>& lineSet, vector<Circle>& circleSet)
 {
+	ifstream input;
+	input.open(inputstring, ios::in);
 	int n;
 	string line = "L";
 	string circle = "C";
@@ -77,6 +52,7 @@ void getInput()
 			circleSet.push_back(newCircle);
 		}
 	}
+	input.close();
 }
 
 //求两向量的点乘结果
@@ -187,11 +163,11 @@ int getPoint(Line l, Circle c, pair<Point, Point>& crossPair)
 //求两圆交点
 int getPoint(Circle c1, Circle c2, pair<Point, Point>& crossPair)
 {
-
+	
 }
 
 //计算总交点个数
-int calPoint()
+int calPoint(vector<Line>& lineSet, vector<Circle>& circleSet, set<Point>& pointSet)
 {
 	for (int i = 0; i < lineSet.size(); i++)
 	{
@@ -241,8 +217,20 @@ int calPoint()
 
 int main(int argc, char* argv[])
 {
-	parseCommandLine(argc, argv);
-	getInput();
-	int n = calPoint();
+	
+	string inputstring = "";
+	string outputstring = "";
+	vector<Line> lineSet;
+	vector<Circle> circleSet;
+	set<Point> pointSet;
+
+	parseCommandLine(argc, argv, inputstring, outputstring);
+	getInput(inputstring, lineSet, circleSet);
+	int n = calPoint(lineSet, circleSet, pointSet);
+
+	ofstream output;
+	output.open(outputstring, ios::out);
+
 	output << n << endl;
+	output.close();
 }
