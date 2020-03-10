@@ -96,6 +96,7 @@ Point getProjection(Point a, Line l)
 	Vector k = getVector(l.p1, a);
 	double r = dot(k, e) / e.length;
 	Point pr;
+	e = getUnitVector(e);
 	pr.x = l.p1.x + r * e.x;
 	pr.y = l.p1.y + r * e.y;
 	return pr;
