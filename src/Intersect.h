@@ -14,7 +14,7 @@
 
 using namespace std;
 
-int compareDouble(double x)
+int compareDouble(double x) noexcept
 {
 	if (fabs(x) < EPS) return 0;
 	if (x < 0) return -1;
@@ -26,12 +26,12 @@ struct Point {
 	double y;
 	double length;
 
-	bool operator ==(const Point& b) const
+	bool operator ==(const Point& b) const noexcept
 	{
 		if (compareDouble(x - b.x) == 0 && compareDouble(y - b.y) == 0) return true;
 		return false;
 	}
-	bool operator <(const Point& b) const
+	bool operator <(const Point& b) const noexcept
 	{
 		if (compareDouble(x - b.x) == 0 && compareDouble(y - b.y) < 0) return true;
 		if (compareDouble(x - b.x) < 0) return true;
