@@ -13,7 +13,7 @@ void parseCommandLine(int argc, char* argv[], string& inputstring, string& outpu
 {
 	string in = "-i";
 	string out = "-o";
-	for (int i = 1; i <= argc; i++)
+	for (int i = 1; i < argc; i++)
 	{
 		string command(argv[i]);
 		if (!command.compare(in))
