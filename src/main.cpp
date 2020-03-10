@@ -131,8 +131,11 @@ int getPoint(Line l1, Line l2, Point& crossPoint) noexcept
 	const int flag2 = (l2.p1.x == l2.p2.x) ? 0 : 1;
 	if (flag1 == 0 && flag2 == 0)
 	{
+		//若两直线的斜率都不存在，则无交点
 		return NOCROSS;
 	}
+	//计算出用一般式表示两条直线时的系数a、b、c
+	//再使用数学公式判断是否存在交点和交点的坐标
 	const double a1 = l1.p1.y - l1.p2.y;
 	const double b1 = l1.p2.x - l1.p1.x;
 	const double c1 = l1.p1.x * l1.p2.y - l1.p2.x * l1.p1.y;
@@ -153,19 +156,22 @@ int getPoint(Line l1, Line l2, Point& crossPoint) noexcept
 //求直线与圆的交点
 int getPoint(Line l, Circle c, pair<Point, Point>& crossPair) noexcept
 {
-	const Point pr = getProjection(c.center, l);
-	const double distance = getPointsDistance(c.center, pr);
+	const Point pr = getProjection(c.center, l); //求圆心在直线上的投影点
+	const double distance = getPointsDistance(c.center, pr); //求投影点到圆心的距离（即圆心到直线的距离）
 	if (distance > c.r)
 	{
+		//若距离大约圆的半径，则无交点
 		return NOCROSS;
 	}
 	else if (distance == c.r)
 	{
+		//若距离等于圆的半径，则有一个交点，交点就是投影点
 		crossPair.first = pr;
 		return ONECROSS;
 	}
 	else
 	{
+		//若距离小与圆的半径，则有两个交点，按照相应的数学方法进行计算
 		const Vector e = getUnitVector(getVector(l.p1, l.p2));
 		const double m = sqrt(c.r * c.r - distance * distance);
 		crossPair.first.x = pr.x + m * e.x;
